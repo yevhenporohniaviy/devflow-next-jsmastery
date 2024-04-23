@@ -1,10 +1,69 @@
+import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilters from "@/components/home/HomeFilters";
 import Filter from "@/components/shared/Filter";
+import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/Search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import Link from "next/link";
 import React from "react";
+
+const questions = [
+  {
+    _id: "1",
+    title: "How to use TypeScript in React applications?",
+    questionToTags: [
+      {
+        questionId: "1",
+        tagId: "1",
+        tag: {
+          id: "1",
+          name: "TypeScript",
+        },
+      },
+      {
+        questionId: "1",
+        tagId: "2",
+        tag: {
+          id: "2",
+          name: "React",
+        },
+      },
+    ],
+    author: {
+      id: "123",
+      name: "John Doe",
+      avatar: "avatar.jpg",
+    },
+    upvotes: 10,
+    views: 100,
+    answers: 5,
+    createdAt: new Date("2024-04-22"),
+  },
+  {
+    _id: "2",
+    title: "What are the best practices for REST API design?",
+    questionToTags: [
+      {
+        questionId: "2",
+        tagId: "3",
+        tag: {
+          id: "3",
+          name: "API Design",
+        },
+      },
+    ],
+    author: {
+      id: "456",
+      name: "Jane Smith",
+      avatar: "avatar.jpg",
+    },
+    upvotes: 15,
+    views: 150,
+    answers: 8,
+    createdAt: new Date("2024-04-21"),
+  },
+];
 
 const Home = () => {
   return (
@@ -33,6 +92,30 @@ const Home = () => {
         />
       </div>
       <HomeFilters />
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {questions.length ? (
+          questions?.map((question, i) => (
+            <QuestionCard
+              key={i}
+              _id={question._id}
+              title={question.title}
+              upvotes={question.upvotes}
+              questionToTags={question.questionToTags}
+              author={question.author}
+              views={question.views}
+              answers={question.answers}
+              createdAt={question.createdAt}
+            />
+          ))
+        ) : (
+          <NoResult
+            title="There’s no question to show"
+            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
+            link="/ask-question"
+            linkTitle="Ask a Question"
+          />
+        )}
+      </div>
     </>
   );
 };
